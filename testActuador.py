@@ -6,17 +6,16 @@ import wiringpi
 io     = wiringpi.GPIO(wiringpi.GPIO.WPI_MODE_PINS)
 reader = SimpleMFRC522.SimpleMFRC522()
 blanco =''
-txtt = '123'
 io.pinMode(7,io.OUTPUT)
 try:
   print("Por Favor Deslisa la Tarjeta")
-  text = reader.read()
+  id,text = reader.read()
   io.digitalWrite(7,io.HIGH)
   time.sleep(0.5)
-  if(text == txtt):
-    print('joder')
-  elif(text == 123):
-    print('es numero')
+  if(text == blanco):
+    print ("Esta Tarjeta Esta Vacia")
+    io.digitalWrite(7,io.LOW)
+  else:
     #print(text)
     print("\n \n")
     print("-----------------------")
@@ -28,10 +27,6 @@ try:
     GPIO.output(17, GPIO.HIGH)
     time.sleep(1)
     GPIO.output(17, GPIO.LOW)
-  else:
-    print('No esta comparando')
-    print(text)
-    print(txtt)
 
 finally:
   GPIO.cleanup()
